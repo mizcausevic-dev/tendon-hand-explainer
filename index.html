@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Tendon-driven dexterous hand</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23090b10'/%3E%3Cpath d='M7 23c2-9 5-13 9-13s7 4 9 13' fill='none' stroke='%2300f5d4' stroke-width='2'/%3E%3C/svg%3E" />
+    <meta
+      name="description"
+      content="A 34-second interactive explainer of an illustrative tendon-driven, five-finger robotic hand."
+    />
+  </head>
+  <body>
+    <div id="loader" role="status">Preparing the specimen…</div>
+    <div id="fallback" hidden>
+      <article class="schematic">
+        <p class="eyebrow">Static fallback</p>
+        <h1>Tendon-driven dexterous hand</h1>
+        <p id="fallback-note">WebGL is required for the animated specimen.</p>
+        <svg viewBox="0 0 640 420" role="img" aria-labelledby="schematic-title schematic-desc">
+          <title id="schematic-title">Schematic of a five-finger tendon-driven hand</title>
+          <desc id="schematic-desc">
+            A palm holds eleven motor-capstan modules. Flexor routes run along the palmar side of four fingers and an opposable thumb. Extensor routes return along the dorsal side. Distal joints are coupled. Fingertip pads carry an illustrative taxel grid for normal contact.
+          </desc>
+          <rect x="70" y="150" width="250" height="180" rx="28" class="chassis" />
+          <rect x="86" y="168" width="218" height="146" rx="18" class="cavity" />
+          <g class="motors">
+            <circle cx="130" cy="210" r="10" />
+            <circle cx="170" cy="210" r="10" />
+            <circle cx="210" cy="210" r="10" />
+            <circle cx="250" cy="210" r="10" />
+            <circle cx="130" cy="250" r="10" />
+            <circle cx="170" cy="250" r="10" />
+            <circle cx="210" cy="250" r="10" />
+            <circle cx="250" cy="250" r="10" />
+            <circle cx="120" cy="292" r="10" />
+            <circle cx="160" cy="292" r="10" />
+            <circle cx="200" cy="292" r="10" />
+          </g>
+          <g class="digits">
+            <path d="M120 150 C110 90 108 50 112 24" />
+            <path d="M170 148 C168 80 166 36 168 12" />
+            <path d="M214 150 C220 84 226 40 232 16" />
+            <path d="M258 154 C274 100 286 64 294 36" />
+            <path d="M96 250 C40 230 24 180 48 150" />
+          </g>
+          <g class="flexors">
+            <path d="M120 150 C110 90 108 50 112 24" />
+            <path d="M170 148 C168 80 166 36 168 12" />
+            <path d="M214 150 C220 84 226 40 232 16" />
+            <path d="M258 154 C274 100 286 64 294 36" />
+            <path d="M96 250 C40 230 24 180 48 150" />
+          </g>
+          <g class="extensors">
+            <path d="M128 150 C138 96 146 58 150 30" />
+            <path d="M178 148 C190 86 198 44 204 18" />
+            <path d="M222 150 C236 92 248 50 258 24" />
+            <path d="M266 154 C286 108 304 74 316 46" />
+          </g>
+          <g class="pads">
+            <rect x="100" y="16" width="24" height="16" rx="6" />
+            <rect x="156" y="4" width="24" height="16" rx="6" />
+            <rect x="220" y="8" width="24" height="16" rx="6" />
+            <rect x="282" y="28" width="22" height="16" rx="6" />
+            <rect x="36" y="138" width="22" height="16" rx="6" />
+          </g>
+        </svg>
+        <dl>
+          <div><dt>Actuators</dt><dd>Flexor and extensor capstans for each finger. The thumb adds an opposition capstan. Eleven modules, all in the palm.</dd></div>
+          <div><dt>Coupling</dt><dd>A tendon pulls. The opposing tendon returns the digit. DIP follows PIP. Thumb IP follows MCP. Spread is a coupled bias, not its own motor.</dd></div>
+          <div><dt>Sensing</dt><dd>Joint-mounted magnetic encoders. Fingertip taxels illustrate normal contact. Shear marks, when shown, are an illustrative estimate.</dd></div>
+          <div><dt>Shots</dt><dd>0–5 s reveal, 5–10 s palm actuation, 10–17 s routing and encoders, 17–25 s tactile contact, 25–34 s manipulation and a held final frame.</dd></div>
+        </dl>
+        <p class="disclaimer">Illustrative telemetry. Not a measured mechanism, torque model, or sensor calibration.</p>
+      </article>
+    </div>
+    <div id="app">
+      <main id="stage">
+        <canvas id="view" aria-hidden="true"></canvas>
+        <svg id="leaders" aria-hidden="true"></svg>
+        <div id="labels" aria-hidden="true"></div>
+        <header>
+          <p class="eyebrow">Illustrative specimen</p>
+          <h1>Tendon-driven dexterous hand</h1>
+        </header>
+        <p id="caption"></p>
+        <p id="telemetry">Illustrative telemetry.</p>
+      </main>
+      <div id="banner" hidden>
+        <p>Reduced motion is on. The timeline stays still until you press Play or scrub.</p>
+      </div>
+      <section class="transport" aria-label="Animation transport">
+        <div class="transport-row">
+          <button type="button" id="play" aria-pressed="false" aria-label="Play animation">Play</button>
+          <button type="button" id="replay">Replay</button>
+          <button type="button" id="prev-shot">Previous shot</button>
+          <button type="button" id="next-shot">Next shot</button>
+          <p id="shot-readout">Shot 1 of 5</p>
+          <p id="time-readout">0.000 s · frame 0000</p>
+        </div>
+        <div class="transport-row timeline-row">
+          <label for="timeline">Timeline</label>
+          <input
+            id="timeline"
+            type="range"
+            min="0"
+            max="34"
+            step="0.001"
+            value="0"
+            aria-valuemin="0"
+            aria-valuemax="34"
+            aria-valuenow="0"
+            aria-label="Animation timeline, 0 to 34 seconds"
+          />
+        </div>
+        <div class="transport-row mix-row">
+          <button type="button" id="mute" aria-pressed="false" aria-label="Mute audio">Mute</button>
+          <label>Music <input id="music" type="range" min="0" max="1" step="0.01" value="0.72" aria-label="Music level" /></label>
+          <label>Effects <input id="effects" type="range" min="0" max="1" step="0.01" value="0.78" aria-label="Effects level" /></label>
+          <button type="button" id="fullscreen">Fullscreen</button>
+          <button type="button" id="reduced" aria-pressed="false">Reduced motion</button>
+        </div>
+        <details>
+          <summary>Mechanical model and keyboard</summary>
+          <div class="notes">
+            <p>Eleven palm-mounted motor-capstan modules. Each of the four fingers has a flexor and an extensor. The thumb adds an opposition capstan. Distal joints are coupled to the joint before them. Abduction is a coupled spread bias with a passive web, not an independent motor.</p>
+            <p>A tendon pulls. Return motion comes from the opposing tendon. Capstan rotation, cable travel, and joint angle stay on the same clock. The taxel grid visualizes normal contact. Tangent marks are labeled “Illustrative shear estimate” and are not a claim that the grid measures shear.</p>
+            <p>Angles and pressure colors are illustrative animation data. They are not live sensing or a validated force simulation. Sound is synthesized for the film, not a recording of this mechanism.</p>
+            <p>Keys, when focus is not on a control: Space plays or pauses, Left and Right seek one second, Shift plus an arrow seeks a tenth of a second, Home and End jump to the ends, R replays, M mutes, F toggles fullscreen.</p>
+          </div>
+        </details>
+      </section>
+      <p id="summary" class="sr-only" aria-live="polite"></p>
+    </div>
+    <noscript>
+      <p>This specimen viewer needs JavaScript and WebGL. The page describes an illustrative tendon-driven robotic hand with antagonistic capstans, coupled distal joints, magnetic encoders, and a normal-contact taxel grid.</p>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

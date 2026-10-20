@@ -41,7 +41,7 @@ Play, pause, replay, timeline scrub, previous and next shot, mute, separate musi
 
 ## GitHub Pages
 
-`vite.config.ts` uses a relative `base`. `.github/workflows/pages.yml` builds `dist` and deploys with GitHub Pages. Enable Pages with the GitHub Actions source on the default branch.
+`vite.config.ts` uses a relative `base`. The live site is the `gh-pages` branch, built from `dist`, with Pages set to that branch and the root path. `.github/workflows/pages.yml` is a manual rebuild and does not run on every push to `main`.
 
 Suggested repository topics: `threejs`, `robotics`, `tendons`, `webgl`, `vite`, `typescript`, `animation`, `kinematics`, `accessibility`, `simulation`.
 

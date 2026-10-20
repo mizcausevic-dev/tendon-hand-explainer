@@ -1,8 +1,8 @@
 name: Deploy GitHub Pages
 
+# The live site is the gh-pages branch. This workflow is a manual rebuild only,
+# so a push to main does not switch Pages over to Actions.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:

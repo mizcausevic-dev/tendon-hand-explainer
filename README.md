@@ -1,50 +1,54 @@
-# Tendon-driven dexterous hand
+# Tendon hand, illustrative anatomy
 
-A 34-second interactive explainer of an illustrative, tendon-driven, five-finger robotic hand. The specimen is procedural: geometry, materials, and audio are generated in the browser. No API keys and no third-party runtime services.
+A 34-second browser study of a tendon-driven, five-finger robotic hand. The hand is an engineered specimen: the palm opens, capstans wind antagonistic tendons, the index finger shows joint sensing, and the digits reorient a small sphere. Every readout is authored animation data.
 
-## Setup
+This is not a validated mechanism. It does not claim packaging, torque, force, dimensions, manufacturability, or hardware performance.
+
+## Run
 
 ```bash
-npm install
-npm test
+npm ci
 npm run dev
 ```
 
-Production:
+Open the local URL Vite prints. Press **Play the study**. Audio starts on that gesture.
 
 ```bash
-npm run build
-npm run preview
+npm run verify   # timeline, tendons, contact, seek purity
+npm run build    # tsc --noEmit && vite build
+npm run preview  # serves dist on port 4173
 ```
 
-Open the dev server at `http://127.0.0.1:5173`. `?t=12.5` opens that timestamp without starting audio.
-
-## What the film shows
-
-One master clock runs from 0 to 34 seconds at a reference 30 fps (frames 0–1019). Playback time does not depend on the render frame rate. At 34 seconds the final pose holds.
-
-| Shot | Time | What you see |
-| --- | --- | --- |
-| 1 | 0–5 s | Palmar hero, then a controlled cover explosion |
-| 2 | 5–10 s | Palm capstans winding antagonistic tendons |
-| 3 | 10–17 s | Index routing, pulleys, guides, magnetic encoders |
-| 4 | 17–25 s | Fingertip contact, taxel map, force-on-object arrows |
-| 5 | 25–34 s | Covers return, in-hand reorientation, held hero |
-
-Chosen actuator layout: four fingers each have a flexor capstan and an extensor capstan. The thumb adds an opposition capstan. Eleven modules sit in the palm. DIP is coupled to PIP. Thumb IP is coupled to MCP. Spread is a coupled bias with a passive web, not its own motor. A tendon only pulls.
-
-The taxel grid is a normal-contact illustration. Tangent marks are labeled “Illustrative shear estimate.” Angles and colors are animation data, not live sensing or a validated force model. Audio is synthesized, not a recording of hardware.
+Node 22. The production build uses relative asset paths (`base: "./"`) so it can sit on a GitHub Pages project site.
 
 ## Controls
 
-Play, pause, replay, timeline scrub, previous and next shot, mute, separate music and effects levels, fullscreen where the browser allows it, and a reduced-motion mode. Keyboard: Space, arrows, Shift+arrows, Home, End, R, M, F, when focus is not already on a control.
+Play and pause, replay, timeline scrub, mute, separate music and effects levels, and full screen where the browser allows it.
+
+Keyboard: Space play/pause, R replay, M mute, F full screen, Left/Right one frame, Shift+arrow one second, Home and End. The timeline is a labeled range input.
+
+If WebGL is missing, the page shows a static palmar schematic of the same actuator layout. `prefers-reduced-motion` checks the calmer camera path. Playback still runs on the same 34-second clock.
+
+## What the model is
+
+Six palm motors and twelve tendons. Each motor turns one dual-groove capstan. One groove takes up a tendon while the other pays the antagonist out. A tendon only pulls.
+
+Four fingers have one motor each. PIP is 0.75×MCP and DIP is 0.50×MCP (pinky 0.72 and 0.48). Those joints are coupled. They are not extra motors. The thumb has two motors, opposition and flexion. Thumb IP is 0.68× thumb MCP flexion. Magnetic encoders are drawn at the joints as angle sensors.
+
+Lengths are illustration scale. The contact solver is a pure function of the master clock, so a seek rebuilds the same pose, tendons, camera, sphere, and overlays. Detail is in `docs/model-notes-Cursor.md`.
+
+## Audio
+
+Music and effects are synthesized in the browser from fixed seeds into two 34-second buffers. They are not recordings of the drawn hardware. Pause, seek, and replay stop the sources and start again at the new offset.
 
 ## GitHub Pages
 
-`vite.config.ts` uses a relative `base`. The live site is the `gh-pages` branch, built from `dist`, with Pages set to that branch and the root path. `.github/workflows/pages.yml` is a manual rebuild and does not run on every push to `main`.
+The live preview is the `gh-pages` branch:
 
-Suggested repository topics: `threejs`, `robotics`, `tendons`, `webgl`, `vite`, `typescript`, `animation`, `kinematics`, `accessibility`, `simulation`.
+https://mizcausevic-dev.github.io/tendon-hand-explainer/
 
-## Limits
+Source for this build is the branch `cursor/tendon-hand-explainer-d3ee`. `.github/workflows/pages.yml` can also build `dist` from `main` or `master`. The site that is actually served is the `gh-pages` branch.
 
-Model units are not millimeters. The film does not claim packaging, torque, manufacturability, or measured sensor performance. Seeking is deterministic because every pose is a function of time, including the contact solve, which always starts from fixed seeds.
+Suggested repository topics, once a remote exists: `threejs`, `vite`, `typescript`, `robotics`, `tendon-driven`, `webgl`, `animation`, `kinematics`, `explanatory-visualization`.
+
+About line: Illustrative 34-second WebGL study of an underactuated tendon-driven robotic hand.

@@ -3,4 +3,10 @@ dist
 .DS_Store
 *.local
 .vite
-coverage
+.vscode
+.netlify
+.env
+.env.*
+shots
+.playwright-mcp
+agent-tools

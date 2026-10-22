@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   base: "./",
@@ -8,11 +8,11 @@ export default defineConfig({
     chunkSizeWarningLimit: 900,
   },
   server: {
-    host: "127.0.0.1",
+    host: "0.0.0.0",
     port: 5173,
   },
-  test: {
-    environment: "node",
-    include: ["src/**/*.test.ts"],
+  preview: {
+    host: "0.0.0.0",
+    port: 4173,
   },
 });

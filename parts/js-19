@@ -21,4 +21,4 @@
 			gl_FragColor = opacity * texel;
 
 
-		`}
+		}`}
